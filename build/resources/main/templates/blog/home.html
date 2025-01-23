@@ -1,0 +1,129 @@
+<div th:fragment="content">
+    <!-- Hero Section -->
+    <div class="relative overflow-hidden mb-16">
+        <div class="max-w-7xl mx-auto">
+            <div class="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:w-full lg:pb-28 xl:pb-32">
+                <main class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
+                    <div class="text-center">
+                        <h1 class="text-4xl tracking-tight font-extrabold text-gray-100 sm:text-5xl md:text-6xl">
+                            <span class="block">Bem-vindo ao</span>
+                            <span class="block bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Blog Moderno</span>
+                        </h1>
+                        <p class="mt-3 text-base text-gray-400 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl">
+                            Um espaço para compartilhar conhecimento e experiências.
+                        </p>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Posts Grid -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+                Posts Recentes
+            </h2>
+        </div>
+
+        <!-- Grid de Posts -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div th:each="post : ${posts}" 
+                 class="bg-dark-800 rounded-xl shadow-lg overflow-hidden border border-dark-700 hover:border-dark-600 transition-all duration-300 hover:transform hover:-translate-y-1">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="h-10 w-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                            <span class="text-white font-bold" th:text="${#strings.substring(post.author,0,1).toUpperCase()}">A</span>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-200" th:text="${post.author}"></p>
+                            <p class="text-xs text-gray-400" th:text="${#temporals.format(post.createdAt, 'dd/MM/yyyy')}"></p>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-bold mb-3">
+                        <a th:href="@{/post/{id}(id=${post.id})}" 
+                           th:text="${post.title}"
+                           class="text-gray-100 hover:text-blue-400 transition-colors"></a>
+                    </h3>
+                    
+                    <p class="text-gray-400 mb-4 line-clamp-3" 
+                       th:text="${#strings.abbreviate(post.content, 150)}"></p>
+                    
+                    <div class="flex items-center justify-between mt-6">
+                        <a th:href="@{/post/{id}(id=${post.id})}" 
+                           class="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors text-sm">
+                            Ler mais 
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                            </svg>
+                        </a>
+                        
+                        <span class="text-gray-500 text-sm">
+                            <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                            </svg>
+                            <span th:text="${#strings.length(post.content)} + ' caracteres'"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mensagem quando não há posts -->
+        <div th:if="${#lists.isEmpty(posts)}" 
+             class="text-center py-16 bg-dark-800 rounded-xl border border-dark-700">
+            <svg class="w-16 h-16 mx-auto text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+            </svg>
+            <p class="text-gray-400 text-lg">Nenhum post encontrado.</p>
+            <p class="text-gray-500 mt-2">Seja o primeiro a compartilhar algo interessante!</p>
+        </div>
+
+        <!-- Paginação (opcional) -->
+        <div class="mt-12 flex justify-center" th:if="${posts.size() > 0}">
+            <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-dark-600 bg-dark-800 text-sm font-medium text-gray-400 hover:bg-dark-700">
+                    <span class="sr-only">Anterior</span>
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+                <a href="#" class="relative inline-flex items-center px-4 py-2 border border-dark-600 bg-dark-700 text-sm font-medium text-gray-200">1</a>
+                <a href="#" class="relative inline-flex items-center px-4 py-2 border border-dark-600 bg-dark-800 text-sm font-medium text-gray-400 hover:bg-dark-700">2</a>
+                <a href="#" class="relative inline-flex items-center px-4 py-2 border border-dark-600 bg-dark-800 text-sm font-medium text-gray-400 hover:bg-dark-700">3</a>
+                <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-dark-600 bg-dark-800 text-sm font-medium text-gray-400 hover:bg-dark-700">
+                    <span class="sr-only">Próximo</span>
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Newsletter Section -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
+        <div class="bg-dark-800 border border-dark-700 rounded-xl shadow-lg overflow-hidden">
+            <div class="px-6 py-12 md:py-16 md:px-12 text-center">
+                <h2 class="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent mb-4">
+                    Inscreva-se na nossa Newsletter
+                </h2>
+                <p class="text-gray-400 mb-8">
+                    Receba as últimas atualizações diretamente na sua caixa de entrada.
+                </p>
+                <form class="max-w-md mx-auto">
+                    <div class="flex gap-4">
+                        <input type="email" 
+                               class="flex-1 min-w-0 px-4 py-3 text-gray-100 bg-dark-700 border border-dark-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                               placeholder="Seu melhor e-mail">
+                        <button type="submit" 
+                                class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            Inscrever
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> 

@@ -1,0 +1,41 @@
+<div th:fragment="content">
+    <div class="mb-6 flex justify-between items-center">
+        <h1 class="text-2xl font-bold">CMS Dashboard</h1>
+        <a href="/cms/post/new" 
+           class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+            Novo Post
+        </a>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md">
+        <table class="min-w-full">
+            <thead>
+                <tr class="bg-gray-50">
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Título</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Autor</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Data</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ações</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                <tr th:each="post : ${posts}">
+                    <td class="px-6 py-4" th:text="${post.title}"></td>
+                    <td class="px-6 py-4" th:text="${post.author}"></td>
+                    <td class="px-6 py-4" th:text="${#temporals.format(post.createdAt, 'dd/MM/yyyy')}"></td>
+                    <td class="px-6 py-4">
+                        <a th:href="@{/cms/post/edit/{id}(id=${post.id})}" 
+                           class="text-blue-500 hover:text-blue-700 mr-4">Editar</a>
+                        <form th:action="@{/cms/post/delete/{id}(id=${post.id})}" 
+                              method="POST" class="inline">
+                            <button type="submit" 
+                                    class="text-red-500 hover:text-red-700"
+                                    onclick="return confirm('Tem certeza?')">
+                                Excluir
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div> 
