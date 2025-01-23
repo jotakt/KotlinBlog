@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog</title>
-    <link href="/css/output.css" rel="stylesheet">
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/output.css}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -15,6 +17,9 @@
     </style>
 </head>
 <body class="bg-dark-900 text-gray-100 min-h-screen">
+    <!-- Teste do Thymeleaf -->
+    <div th:text="${'Thymeleaf está ' + (#strings.equals(#locale.toString(), 'pt_BR') ? 'funcionando' : 'working')}"></div>
+
     <nav class="bg-dark-800 border-b border-dark-700">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex justify-between h-16">
@@ -49,9 +54,15 @@
     </nav>
     
     <main class="container mx-auto px-4 py-8">
-        <div th:replace="${content}">
+        <div layout:fragment="content">
             <!-- Conteúdo será inserido aqui -->
         </div>
     </main>
+
+    <footer class="bg-dark-800 border-t border-dark-700 py-8 mt-8">
+        <div class="container mx-auto px-4">
+            <p class="text-center text-gray-400">© 2024 Blog. Todos os direitos reservados.</p>
+        </div>
+    </footer>
 </body>
 </html> 

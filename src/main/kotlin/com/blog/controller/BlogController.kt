@@ -12,7 +12,7 @@ class BlogController(private val postRepository: PostRepository) {
 
     @GetMapping("/")
     fun home(model: Model): String {
-        model.addAttribute("posts", postRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt")))
+        model.addAttribute("posts", emptyList<Any>()) // Temporário até termos posts reais
         return "blog/home"
     }
 

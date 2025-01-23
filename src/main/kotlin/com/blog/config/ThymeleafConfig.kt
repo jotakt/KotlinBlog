@@ -2,7 +2,6 @@ package com.blog.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect
 import org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect
 import org.thymeleaf.spring6.SpringTemplateEngine
@@ -33,7 +32,4 @@ class ThymeleafConfig {
         engine.addDialect(SpringSecurityDialect())
         return engine
     }
-
-    @Bean
-    fun passwordEncoder() = BCryptPasswordEncoder()
 } 

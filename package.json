@@ -1,13 +1,13 @@
 {
-  "name": "blog",
+  "name": "kotlinblog",
   "version": "1.0.0",
-  "description": "Blog com CMS",
+  "description": "",
   "scripts": {
-    "watch:css": "npx tailwindcss -i ./src/main/resources/static/css/input.css -o ./src/main/resources/static/css/output.css --watch",
-    "build:css": "npx tailwindcss -i ./src/main/resources/static/css/input.css -o ./src/main/resources/static/css/output.css --minify"
+    "watch:css": "tailwindcss -i ./src/main/resources/static/css/input.css -o ./src/main/resources/static/css/output.css --watch",
+    "build:css": "tailwindcss -i ./src/main/resources/static/css/input.css -o ./src/main/resources/static/css/output.css"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.10",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "@tailwindcss/typography": "^0.5.10"
   }
-} 
+}
